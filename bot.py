@@ -1,10 +1,10 @@
 import os
 import tweepy
-from secrets import *
+import requests
+from key import *
 from time import gmtime, strftime
 
 
-# ====== Individual bot configuration ==========================
 bot_username = 'HurricaneBot1'
 logfile_name = bot_username + ".log"
 
@@ -13,9 +13,10 @@ logfile_name = bot_username + ".log"
 
 def create_tweet():
     """Create the text of the tweet you want to send."""
-    # Replace this with your code!
-    text = ""
-    return text
+    r = requests.get('http://api.wunderground.com/api/1db15a63686c68ec/currenthurricane/view.json')
+    json_object = r.json()
+    text = str(json_object['currenthurricane'][0]['stormInfo']['stormName'])
+    return "storm name: " + text
 
 
 def tweet(text):
